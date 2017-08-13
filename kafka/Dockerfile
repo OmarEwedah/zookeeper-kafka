@@ -12,10 +12,10 @@ RUN rm kafka_2.11-0.10.2.1.tgz
 
 WORKDIR kafka_2.11-0.10.2.1/
 
-RUN sed -i "s|/tmp/kafka-logs|/var/ |g" config/server.properties \
-RUN sed -i "s|localhost:2181|$(curl -s ifconfig.co):2181 |g" config/server.properties \
-RUN sed -i "s|broker.id=0|# |g" config/server.properties \
-RUN echo "broker.id=$(ifconfig eth0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' |cut -d . -f 4)" >> config/server.properties \
+RUN sed -i "s|/tmp/kafka-logs|/var/ |g" config/server.properties
+RUN sed -i "s|localhost:2181|$(curl -s ifconfig.co):2181 |g" config/server.properties
+RUN sed -i "s|broker.id=0|# |g" config/server.properties
+RUN echo "broker.id=$(ifconfig eth0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' |cut -d . -f 4)" >> config/server.properties
 RUN sed -i "s|#advertised.listeners=PLAINTEXT://your.host.name:9092|advertised.listeners=PLAINTEXT://$(curl -s ifconfig.co):9092 |g" config/server.properties
 
 EXPOSE 9092
